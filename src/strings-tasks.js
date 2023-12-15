@@ -296,8 +296,8 @@ function reverseString(str) {
     return '';
   }
   const currentString = str.split('');
-  const newString = currentString.reverse().join('');
-  return newString;
+  const longestWord = currentString.reverse().join('');
+  return longestWord;
 }
 
 /**
@@ -383,17 +383,11 @@ function isPalindrome(str) {
   if (!str) {
     return 0;
   }
-  const isStringPalindrome = str
+  const stringWithoutPunctuation = str
     .toLowerCase()
-    .replace(/[^a-zа-яё]/gi, '')
-    .split('')
-    .reverse()
-    .join('');
-  let newPalindromeString = '';
-  for (let i = isStringPalindrome.length - 1; i >= 0; i -= 1) {
-    newPalindromeString += isStringPalindrome[i];
-  }
-  if (newPalindromeString === isStringPalindrome) {
+    .replace(/[^a-zа-яё]/gi, '');
+  const reversedString = stringWithoutPunctuation.split('').reverse().join('');
+  if (stringWithoutPunctuation === reversedString) {
     return true;
   }
   return false;
@@ -417,16 +411,16 @@ function findLongestWord(sentence) {
   }
 
   const newSentence = sentence.split(' ');
-  let theLongestWord = 0;
-  let newString = '';
+  let longestWordLength = 0;
+  let longestWord = '';
 
   for (let i = 0; i < newSentence.length; i += 1) {
-    if (newSentence[i].length > theLongestWord) {
-      theLongestWord = newSentence[i].length;
-      newString = newSentence[i];
+    if (newSentence[i].length > longestWordLength) {
+      longestWordLength = newSentence[i].length;
+      longestWord = newSentence[i];
     }
   }
-  return newString;
+  return longestWord;
 }
 
 /**
@@ -539,8 +533,11 @@ function unbracketTag(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  if (!str) {
+    return [];
+  }
+  return str.split(';');
 }
 
 /**
@@ -559,8 +556,14 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const originalAlphabet =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const cipher = 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM';
+  return str.replace(
+    /[a-z]/gi,
+    (letter) => cipher[originalAlphabet.indexOf(letter)]
+  );
 }
 
 /**
@@ -587,8 +590,62 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return cards.findIndex((card) => card === value);
 }
 
 module.exports = {
